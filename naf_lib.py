@@ -1,11 +1,12 @@
 #! /usr/bin/python
 #-*- coding: utf-8 -*-
-
+from types import *
 class NAF:
 	def __init__(self, d=0):
-		self.type = "NAF"
+		print __name__
 		self.value = []
 		self.sign = 0
+		self.__type__ = "NAF"
 		if d != 0:
 			if d < 0:
 				self.sign = 1
@@ -22,6 +23,7 @@ class NAF:
 			self.value.append(0)
 
 	def naf(self, d):
+		self.value = []
 		if d == 0:
 			self.value = [0]
 		elif d < 0:
@@ -50,4 +52,23 @@ class NAF:
 			tmp = 0 - tmp
 		return tmp
 
-	
+	def __add__(self, a):
+		if type(a) == IntType:
+			return self.int() + a
+		elif type(a) == InstanceType:
+			if "__type__" in a.__dict__.keys():
+				if a.__dict__["__type__"] == "NAF":
+					return self.int() + a.int()
+		else: 
+			print "error of type"
+
+
+	def __radd__(self, a):
+		if type(a) == IntType:
+			return self.int() + a
+		elif type(a) == InstanceType:
+			if "__type__" in a.__dict__.keys():
+				if a.__dict__["__type__"] == "NAF":
+					return self.int() + a.int()
+		else: 
+			print "error of type"
